@@ -1,0 +1,16 @@
+# Tools.
+.DS_Store
+.vscode
+debug
+
+# Project directories.
+build
+dist
+
+# Project files.
+dns-reset
+
+# Configuration and stuff.
+config.toml
+!**/*/config.toml
+.env
