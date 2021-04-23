@@ -39,20 +39,20 @@ func (c *Communicator) pingRequest(domain string, requestLimit int) (err error) 
 		return errors.Wrap(err)
 	}
 
+	matchTimeOut := regexp.MustCompile("cannot resolve")
+	matchPackets := regexp.MustCompile("packets")
+
 	scanner := bufio.NewScanner(output)
 	for scanner.Scan() {
 		message := scanner.Text()
 
-		matchTimeOut, _ := regexp.MatchString("cannot resolve", message)
-		matchPackets, _ := regexp.MatchString("packets", message)
-
-		if matchTimeOut {
+		if matchTimeOut.MatchString(message) {
 			fmt.Println("Cannot connect to", domain)
 			fmt.Println("  *Error Message*  ", message)
 			break
 		}
 
-		if matchPackets {
+		if matchPackets.MatchString(message) {
 			fmt.Println("Ping statistics for", domain)
 			fmt.Println(message)
 			break
